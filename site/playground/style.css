@@ -91,3 +91,34 @@ body {
   max-width: 20rem;
   flex-shrink: 0;
 }
+
+.ide{
+  flex-grow: 1;
+  display: flex;
+  height: calc(100vh - 4.6rem);
+}
+.editor{
+  max-width: 450px;
+  --playground-bar-height:3rem
+}
+
+.preview{
+  flex: 1;
+}
+
+
+#ide-editor{
+  height: calc(100vh - 7.6rem) ;
+
+}
+
+#ide-preview{
+  height: calc(100vh - 4.6rem) ;
+}
+
+.urlDiv{
+  position: absolute;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
