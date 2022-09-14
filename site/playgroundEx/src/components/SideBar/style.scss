@@ -1,0 +1,208 @@
+div {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+    &::-webkit-scrollbar {
+        display: none; /* Chrome Safari */
+    }
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+
+a {
+    display: block;
+    padding-left: 10px;
+    color: #000;
+    width: 100%;
+    line-height: 44px;
+    transition: 0.25s;
+    &:link {
+        text-decoration: none;
+    }
+    &:visited {
+        text-decoration: none;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+    &:active {
+        text-decoration: none;
+    }
+}
+
+.foldTool {
+    background-color: #fff;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    border-radius: 0px 6px 6px 0px;
+    padding: 0px 10px 0px 0px;
+    color: #000;
+    border: 1px solid #ccc;
+    border-left: none;
+    position: relative;
+    right: 1px;
+}
+
+.foldIcon {
+    flex: 1;
+    text-align: right;
+    padding: 0px 15px;
+    transition: 0.35s;
+}
+
+span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.textAlign-right {
+    text-align: right;
+}
+
+.textAlign-left {
+    text-align: left;
+}
+
+.rotateX-180 {
+    transform: rotateX(180deg);
+}
+
+.rotate3dZ-180 {
+    transform: rotate3d(0, 0, 1, 180deg);
+}
+
+.rotate3dX-180 {
+    transform: rotate3d(1, 0, 0, 180deg);
+}
+
+.foldToolTransform {
+    transform: rotate3d(0, 0, 1, 180deg) translate(-10px, 0px);
+}
+// .translateX-16rem {
+//     transform: translateX(-16rem);
+// }
+
+.rem-14 {
+    font-size: 15px;
+    width: 14rem;
+}
+
+.rem-16 {
+    width: 16rem;
+}
+
+.rem-17 {
+    width: 17rem;
+}
+
+.rem-0 {
+    width: 0rem;
+}
+
+.left-0rem {
+    left: 0rem;
+}
+
+.left-16rem {
+    left: 16rem;
+}
+
+.left-14rem {
+    left: 14rem;
+}
+
+.menu-wrap {
+    display: flex;
+    align-items: center;
+    transition: 0.25s;
+    background: #fff;
+}
+
+.menu {
+    height: 100%;
+    // width: 100%;
+    overflow: scroll;
+    background-color: #fff;
+    color: #000;
+    &::-webkit-scrollbar {
+        display: none; /* Chrome Safari */
+    }
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    .menu-item {
+        overflow: hidden;
+    }
+    border-right: 1px solid #ccc;
+
+    .topic {
+        height: 40px;
+        padding: 0px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .examples-wrap {
+        // box-shadow: inset 0px 2px 5px #ccc;
+        background-color: #f9f9f9;
+        transition: 0.3s;
+        overflow: hidden;
+        div {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            transition: 0.25s;
+        }
+        .examples {
+            min-height: 44px;
+        }
+        .subTitle {
+            height: 50px;
+            span {
+                padding-left: 15px;
+            }
+        }
+        .with-thumbnail {
+            display: flex;
+            flex-direction: column;
+            overflow: scroll;
+        }
+        .subItems {
+            flex-direction: column;
+            background-color: #f3f3f3;
+            .sub-item {
+                padding: 8px 4px;
+            }
+        }
+        .itemActive {
+            background: #cae4ff;
+            border-right: 4px solid #214393;
+        }
+    }
+}
+
+.hoverBkg {
+    &:hover {
+        background-color: #eef7ff;
+    }
+}
+.hoverFont {
+    &:hover {
+        color: #306eff;
+    }
+}
+
+.thumbnail {
+    height: 100px;
+    display: block;
+    margin-left: 10px;
+}
+
+p {
+    margin: 0px;
+}
