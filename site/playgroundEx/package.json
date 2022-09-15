@@ -10,15 +10,16 @@
     "dev:screenshot": "vite && nodemon -x node scripts/screenshot.js "
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "vue": "^3.2.37"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.0",
-    "nodemon": "^2.0.19",
-    "sass": "^1.54.9",
-    "vite": "^3.1.0",
     "inquirer": "^8.2.4",
+    "nodemon": "^2.0.19",
     "ora": "^5.4.1",
-    "puppeteer": "^17.1.0"
+    "puppeteer": "^17.1.0",
+    "sass": "^1.54.9",
+    "vite": "^3.1.0"
   }
 }
