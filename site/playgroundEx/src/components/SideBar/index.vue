@@ -19,7 +19,16 @@
             :class="`topic hover-font ${animations.handleIconFold(topic.fold)}`"
             @click.stop="animations.toggleFold(topic)"
           >
-            <strong>{{ topic.name }}</strong>
+            <strong
+              v-html="
+                topic.has
+                  ? topic.name.replace(
+                      inputValue,
+                      `<strong class='filter-font'>${inputValue}</strong>`,
+                    )
+                  : topic.name
+              "
+            ></strong>
             <span class="fold-icon"></span>
           </span>
           <CollapseTransition>
@@ -40,7 +49,16 @@
                       )}`"
                       @click.stop="animations.toggleFold(item)"
                     >
-                      <p>{{ item.name }}</p>
+                      <p
+                        v-html="
+                          item.has
+                            ? item.name.replace(
+                                inputValue,
+                                `<strong class='filter-font'>${inputValue}</strong>`,
+                              )
+                            : item.name
+                        "
+                      ></p>
                       <span class="fold-icon"></span>
                     </div>
                     <CollapseTransition>
@@ -133,5 +151,53 @@ watchEffect(() => {
 });
 </script>
 <style lang="scss" scoped>
+div {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  &::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+a {
+  display: block;
+  padding-left: 10px;
+  color: #000;
+  width: 100%;
+  line-height: 44px;
+  transition: 0.25s;
+  &:link {
+    text-decoration: none;
+  }
+  &:visited {
+    text-decoration: none;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+  &:active {
+    text-decoration: none;
+  }
+}
+
+span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+strong {
+  padding-left: 5px;
+}
+
+p {
+  margin: 0px;
+}
+</style>
+<style lang="scss">
 @import './style.scss';
 </style>

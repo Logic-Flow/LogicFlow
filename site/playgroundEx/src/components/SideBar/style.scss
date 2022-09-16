@@ -1,46 +1,3 @@
-div {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    -khtml-user-select: none;
-    user-select: none;
-    &::-webkit-scrollbar {
-        display: none; /* Chrome Safari */
-    }
-    scrollbar-width: none; /* firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-}
-
-a {
-    display: block;
-    padding-left: 10px;
-    color: #000;
-    width: 100%;
-    line-height: 44px;
-    transition: 0.25s;
-    &:link {
-        text-decoration: none;
-    }
-    &:visited {
-        text-decoration: none;
-    }
-    &:hover {
-        text-decoration: none;
-    }
-    &:active {
-        text-decoration: none;
-    }
-}
-
-span {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-p {
-    margin: 0px;
-}
-
 .rem-17 {
     width: 17rem;
 }
@@ -257,4 +214,9 @@ p {
         // background-color: #ccc;
         color: #306eff;
     }
+}
+
+.filter-font {
+    padding-left: 0px !important;
+    color: #306eff;
 }
