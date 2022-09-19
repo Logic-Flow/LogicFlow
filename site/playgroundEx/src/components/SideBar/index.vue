@@ -13,35 +13,27 @@
         </div>
         <MenuUp class="menu-search-fold" @click="FoldAll" />
       </div>
-      <div v-for="topic in config.topic" :key="topic.key">
+      <div v-for="topic in config" :key="topic.key">
         <div :class="`menu-item  ${topic.name}`" v-show="topic.has">
           <span
             :class="`topic hover-font ${animations.handleIconFold(topic.fold)}`"
             @click.stop="animations.toggleFold(topic)"
           >
-            <strong
-              v-html="
-                topic.has
-                  ? topic.name.replace(
-                      inputValue,
-                      `<strong class='filter-font'>${inputValue}</strong>`,
-                    )
-                  : topic.name
-              "
-            ></strong>
+            <strong v-html="tools.hightLight(topic, inputValue)"></strong>
             <span class="fold-icon"></span>
           </span>
+          {{ topic.fold }}
           <CollapseTransition>
             <div :class="`examples-wrap`" v-show="!topic.fold">
               <div
-                v-for="item in topic.examples"
+                v-for="item in topic.children"
                 :key="item.key"
                 @click.stop="menuItemEvents.handleExamplesItemClick(item.name)"
               >
                 <div v-show="item.has" class="examples">
                   <div
                     :class="`with-thumbnail ${item.name}`"
-                    v-if="type === 'withThumbnail'"
+                    v-if="type === 'thumbnail'"
                   >
                     <div
                       :class="`hover-font sub-title ${animations.handleIconFold(
@@ -49,22 +41,15 @@
                       )}`"
                       @click.stop="animations.toggleFold(item)"
                     >
-                      <p
-                        v-html="
-                          item.has
-                            ? item.name.replace(
-                                inputValue,
-                                `<strong class='filter-font'>${inputValue}</strong>`,
-                              )
-                            : item.name
-                        "
-                      ></p>
+                      <p v-html="tools.hightLight(item, inputValue)"></p>
                       <span class="fold-icon"></span>
                     </div>
+                    {{ item.fold }}
+
                     <CollapseTransition>
                       <div v-show="!item.fold" class="sub-items">
                         <div
-                          v-for="(example, index) in topic.examples"
+                          v-for="(example, index) in item.examples"
                           :key="example.key"
                         >
                           <a
@@ -80,7 +65,7 @@
                               }
                             "
                             :class="`sub-${item.name}-${index}-${example.name} hover-bkg sub-item`"
-                            :href="`#${item.name}`"
+                            :href="`#${example.key}`"
                           >
                             <img
                               class="thumbnail"
@@ -93,10 +78,10 @@
                   </div>
                   <div v-else :class="`${item.name} hover-bkg`">
                     <a
-                      :href="`#${item.name}`"
+                      :href="`#${item.key}`"
                       @click="menuItemEvents.thumbnailClick(topic.name)"
+                      v-html="tools.hightLight(item, inputValue)"
                     >
-                      {{ item.name }}
                     </a>
                   </div>
                 </div>
@@ -122,16 +107,20 @@ import _ from 'lodash';
 const props = defineProps({
   type: {
     type: String,
-    default: 'withThumbnail', // 包含缩略图/
+    default: 'thumbnail', // 包含缩略图/
+  },
+  menuConfig: {
+    type: Array,
+    default: () => [],
   },
 });
 
 const animations = useAnimations();
-const menuItemEvents = useMenuItemEvent();
+const menuItemEvents = useMenuItemEvent(props);
 const tools = useTools();
 
-const injectConfig = inject('config');
-const conf = ref(_.cloneDeep(injectConfig));
+// const injectConfig = inject('config').topic;
+const conf = ref(_.cloneDeep(props.menuConfig));
 const config = ref({});
 const inputValue = ref('');
 const widthHidden = ref(false);
@@ -151,52 +140,7 @@ watchEffect(() => {
 });
 </script>
 <style lang="scss" scoped>
-div {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -khtml-user-select: none;
-  user-select: none;
-  &::-webkit-scrollbar {
-    display: none; /* Chrome Safari */
-  }
-  scrollbar-width: none; /* firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
-
-a {
-  display: block;
-  padding-left: 10px;
-  color: #000;
-  width: 100%;
-  line-height: 44px;
-  transition: 0.25s;
-  &:link {
-    text-decoration: none;
-  }
-  &:visited {
-    text-decoration: none;
-  }
-  &:hover {
-    text-decoration: none;
-  }
-  &:active {
-    text-decoration: none;
-  }
-}
-
-span {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-strong {
-  padding-left: 5px;
-}
-
-p {
-  margin: 0px;
-}
+@import './scoped.scss';
 </style>
 <style lang="scss">
 @import './style.scss';

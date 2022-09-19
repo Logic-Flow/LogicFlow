@@ -1,6 +1,7 @@
 import { reactive } from 'vue';
+import { TypeOf } from '../../utils';
 
-export const useMenuItemEvent = () => {
+export const useMenuItemEvent = (props) => {
   const el = reactive({
     cur: {
       name: '',
@@ -17,6 +18,11 @@ export const useMenuItemEvent = () => {
       name: '',
       node: '',
     },
+  });
+
+  let path = reactive({
+    value: [],
+    string: '',
   });
 
   const clickItem = (className) => {
@@ -37,30 +43,57 @@ export const useMenuItemEvent = () => {
   };
 
   const handleExamplesItemClick = (className) => {
-    props.type !== 'withThumbnail' && clickItem(className);
+    props.type !== 'thumbnail' && clickItem(className);
   };
 
-  const toggleSelected = (flag, next) => {
-    const cur = selected[flag];
-    if (cur.name !== '') {
-      if (cur.name !== next) {
-        cur.node.classList.remove('selected');
+  const findSelectedPath = (source, name) => {
+    const path = [name];
+    const backTracking = (data, target) => {
+      for (let i = 0; i < data.length; i++) {
+        const tmp = data[i];
+        if (tmp.name === target) {
+          return true;
+        }
+        if (
+          (tmp.children && tmp.children.length > 0) ||
+          (tmp.examples && tmp.examples.length > 0)
+        ) {
+          const res = backTracking(tmp.children || tmp.examples, name);
+          if (res) {
+            path.push(tmp.name);
+            return true;
+          }
+        }
       }
-    }
-    cur.name = next;
-    cur.node = document.querySelector(`.${cur.name}`);
-    cur.node.classList.add('selected');
+    };
+    backTracking(source, name);
+    return path;
   };
 
-  const thumbnailClick = (fthrClass, grdFthrClass) => {
-    fthrClass && toggleSelected('fthr', fthrClass);
-    grdFthrClass && toggleSelected('grdFthr', grdFthrClass);
+  const toggleSelectedByPath = (source, name) => {
+    const res = findSelectedPath(source, name);
+    const str = res.toString();
+    if (path.string !== '') {
+      if (path.string === str) return;
+      path.value.forEach((item) => {
+        const el = document.querySelector(`.${item}`);
+        el.classList.remove('selected');
+      });
+      path.value = res;
+      path.string = str;
+    }
+    path.value = res;
+    path.string = str;
+    path.value.forEach((item) => {
+      const el = document.querySelector(`.${item}`);
+      el.classList.add('selected');
+    });
   };
 
   return {
     clickItem,
     handleExamplesItemClick,
-    thumbnailClick,
+    toggleSelectedByPath,
   };
 };
 
@@ -81,36 +114,85 @@ export const useAnimations = () => {
 
 export const useTools = () => {
   const initConfig = (data) => {
-    data.topic.forEach((topic) => {
-      topic.fold = true;
-      topic.examples.forEach((example) => {
-        example.fold = true;
-      });
+    data.forEach((item) => {
+      item.fold = true;
+      if (
+        item.children &&
+        TypeOf(item.children, 'Array') &&
+        item.children.length > 0
+      ) {
+        initConfig(item.children);
+      }
     });
   };
 
-  const filter = (config, target) => {
-    config.topic.forEach((topic) => {
-      let count = 0;
-      topic.examples.forEach((item) => {
-        if (item.name.includes(target)) {
-          item.has = true;
-          count++;
-        } else {
-          item.has = false;
-        }
-      });
-      if (count === 0) {
-        topic.has = false;
-      } else {
-        topic.has = true;
+  const setTrue = (source) => {
+    if (!source) {
+      return;
+    }
+    source.forEach((i) => {
+      i.has = true;
+      if (i.children) {
+        setTrue(i.children);
       }
     });
-    return config;
+  };
+
+  const filter = (data, target) => {
+    if (!data) {
+      return;
+    }
+    data.forEach((item) => {
+      if (item.name === target) {
+        item.has = true;
+
+        setTrue(item.children);
+      } else {
+        const recursion = (data, target) => {
+          if (!data) {
+            return;
+          }
+          let count = 0;
+          data.forEach((i) => {
+            if (i.name.includes(target)) {
+              i.has = true;
+              count++;
+            } else {
+              i.has = false;
+            }
+            data.children && filter(data.children, target);
+          });
+          if (count === 0) {
+            item.has = false;
+          } else {
+            item.has = true;
+          }
+        };
+        recursion(item.children, target);
+        if (item.has === false) {
+          console.log(item.name.includes(target));
+          if (item.name.includes(target)) {
+            item.has = true;
+            setTrue(item.children);
+          }
+        }
+      }
+    });
+    return data;
+  };
+
+  const hightLight = (item, inputValue) => {
+    return item.has
+      ? item.name.replace(
+          inputValue,
+          `<strong class='filter-font'>${inputValue}</strong>`,
+        )
+      : item.name;
   };
 
   return {
     filter,
     initConfig,
+    hightLight,
   };
 };

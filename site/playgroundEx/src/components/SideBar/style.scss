@@ -59,6 +59,7 @@
         align-items: center;
         cursor: pointer;
         transition: 0.25s;
+        background-color: #fff;
     }
 
     .examples-wrap {
@@ -67,8 +68,6 @@
         overflow: hidden;
 
         div {
-            display: flex;
-            align-items: center;
             width: 100%;
             transition: 0.25s;
         }
@@ -80,11 +79,13 @@
 
         .item-active {
             background: #cae4ff;
-            border-right: 4px solid #214393;
+            box-shadow: inset -5px 0px #214393;
         }
 
         .sub-title {
+            display: flex;
             height: 50px;
+            align-items: center;
             justify-content: space-between;
             :first-child {
                 padding-left: 15px;
@@ -97,8 +98,15 @@
         .sub-items {
             flex-direction: column;
             background-color: #f3f3f3;
+            a {
+                display: flex;
+                img {
+                    display: inline-block;
+                }
+            }
             .sub-item {
-                padding: 8px 4px;
+                transition: 0.25s;
+                padding: 8px 0px;
             }
         }
 
@@ -174,10 +182,6 @@
     text-align: right;
     position: relative;
     right: 10px;
-    // width: 7px !important;
-    // height: 7px !important;
-    // border-radius: 50px;
-    // border: 1.5px solid #314659;
     &::after {
         transition: 0.25s;
         content: "";
@@ -211,7 +215,6 @@
 
 .selected {
     &:first-child {
-        // background-color: #ccc;
         color: #306eff;
     }
 }

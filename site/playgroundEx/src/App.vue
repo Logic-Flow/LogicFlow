@@ -4,14 +4,15 @@
 import { provide } from 'vue';
 
 import SideBarVue from './components/SideBar/index.vue';
+import MenuVue from './components/SideBar/Menu.vue';
 import config from '../examples/config.json';
-
-provide('config', config);
+const type = 'thumbnail';
 </script>
 
 <template>
   <div class="container">
-    <SideBarVue></SideBarVue>
+    <!-- <SideBarVue :type="type" :menuConfig="config.topic"></SideBarVue> -->
+    <MenuVue :type="type" :menuConfig="config.topic"></MenuVue>
     <div class="main"></div>
   </div>
 </template>

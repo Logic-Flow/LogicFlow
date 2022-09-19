@@ -2,7 +2,7 @@
 import { addClass, removeClass } from './utils';
 const useTransition = () => {
   function beforeEnter(el) {
-    addClass(el, 'collapse-transition');
+    addClass(el, 'collapse-transition-group');
     if (!el.dataset) el.dataset = {};
 
     el.dataset.oldPaddingTop = el.style.paddingTop;
@@ -30,7 +30,7 @@ const useTransition = () => {
 
   function afterEnter(el) {
     // for safari: remove class then reset height is necessary
-    removeClass(el, 'collapse-transition');
+    removeClass(el, 'collapse-transition-group');
     el.style.height = '';
     el.style.overflow = el.dataset.oldOverflow;
   }
@@ -48,7 +48,7 @@ const useTransition = () => {
   function leave(el) {
     if (el.scrollHeight !== 0) {
       // for safari: add class after set height, or it will jump to zero height suddenly, weired
-      addClass(el, 'collapse-transition');
+      addClass(el, 'collapse-transition-group');
       el.style.height = 0;
       el.style.paddingTop = 0;
       el.style.paddingBottom = 0;
@@ -56,7 +56,7 @@ const useTransition = () => {
   }
 
   function afterLeave(el) {
-    removeClass(el, 'collapse-transition');
+    removeClass(el, 'collapse-transition-group');
     el.style.height = '';
     el.style.overflow = el.dataset.oldOverflow;
     el.style.paddingTop = el.dataset.oldPaddingTop;
@@ -78,7 +78,7 @@ const transition = useTransition();
 
 <template>
   <TransitionGroup
-    name="my-transition"
+    name="my-group-transition"
     @before-enter="transition.beforeEnter"
     @enter="transition.enter"
     @after-enter="transition.afterEnter"
