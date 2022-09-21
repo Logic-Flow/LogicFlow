@@ -13,6 +13,8 @@ dist
 dist-ssr
 *.local
 src/assets/screenshots/*
+!src/assets/screenshots/custom-node-1-1.png
+
 
 # Editor directories and files
 .vscode/*
