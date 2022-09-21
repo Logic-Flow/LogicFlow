@@ -12,7 +12,7 @@ node_modules
 dist
 dist-ssr
 *.local
-src/assets/screenshots
+src/assets/screenshots/*
 
 # Editor directories and files
 .vscode/*
