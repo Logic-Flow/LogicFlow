@@ -13,9 +13,9 @@ dist-ssr
 *.local
 
 playground_json/*
-!.gitkeep
+!playground_json/example.json
 src/assets/screenshots/*
-!src/assets/.gitkeep
+!src/assets/screenshots/example.png
 
 
 # Editor directories and files
