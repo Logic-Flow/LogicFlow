@@ -7,13 +7,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-playground_json
 node_modules
 dist
 dist-ssr
 *.local
+
+playground_json/*
+!.gitkeep
 src/assets/screenshots/*
-!src/assets/screenshots/custom-node-1-1.png
+!src/assets/.gitkeep
 
 
 # Editor directories and files
