@@ -47,4 +47,6 @@ const animations = inject('animations');
 const tools = inject('tools');
 const inputValue = inject('inputValue');
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss">
+@import './style.scss';
+</style>

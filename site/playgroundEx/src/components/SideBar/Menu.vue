@@ -23,17 +23,13 @@
 </template>
 
 <script setup>
-import { provide, ref, watchEffect } from 'vue';
+import { provide, ref, watchEffect, inject } from 'vue';
 import _ from 'lodash';
 import { useAnimations, useMenuItemEvent, useTools } from './composition';
 import IntervalMenuVue from './IntervalMenu.vue';
 import MenuUp from '../svg/menuUp.vue';
 
 const props = defineProps({
-  type: {
-    type: String,
-    default: 'thumbnail',
-  },
   menuConfig: {
     type: Array,
     default: () => [],
@@ -60,9 +56,8 @@ const handleWidthHidden = () => {
 watchEffect(() => {
   config.value = tools.filter(_.cloneDeep(conf.value), inputValue.value);
 });
-
 provide('config', config.value);
-provide('type', props.type);
+const type = inject('type');
 provide('inputValue', inputValue);
 provide('animations', animations);
 provide('menuItemEvents', menuItemEvents);

@@ -9,17 +9,6 @@ export const useMenuItemEvent = (props) => {
     },
   });
 
-  const selected = reactive({
-    fthr: {
-      name: '',
-      node: '',
-    },
-    grdFthr: {
-      name: '',
-      node: '',
-    },
-  });
-
   let path = reactive({
     value: [],
     string: '',
@@ -145,7 +134,6 @@ export const useTools = () => {
     data.forEach((item) => {
       if (item.name === target) {
         item.has = true;
-
         setTrue(item.children);
       } else {
         const recursion = (data, target) => {
@@ -170,7 +158,6 @@ export const useTools = () => {
         };
         recursion(item.children, target);
         if (item.has === false) {
-          console.log(item.name.includes(target));
           if (item.name.includes(target)) {
             item.has = true;
             setTrue(item.children);

@@ -3,7 +3,7 @@
 }
 
 .rem-0 {
-    width: 0rem;
+    width: 27px;
 }
 
 .menu-wrap {
@@ -49,6 +49,7 @@
 
     .menu-item {
         overflow: hidden;
+        transition: 0.25s;
     }
 
     .topic {

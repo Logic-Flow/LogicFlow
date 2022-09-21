@@ -17,6 +17,7 @@
         <div v-show="!data.fold" class="sub-items">
           <div v-for="(example, index) in data.examples" :key="example.key">
             <a
+              draggable="false"
               @click.stop="
                 () => {
                   menuItemEvents.clickItem(`${example.name}`);
@@ -26,10 +27,7 @@
               :class="`${example.name} hover-bkg sub-item`"
               :href="`#${example.key}`"
             >
-              <img
-                class="thumbnail"
-                :src="`/src/assets/screenshots/${example.key}.png`"
-              />
+              <img draggable="false" class="thumbnail" />
             </a>
           </div>
         </div>
@@ -47,7 +45,7 @@
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { inject, computed } from 'vue';
 import CollapseTransition from '../SideBarTransition/transition.vue';
 
 const props = defineProps({
@@ -66,7 +64,9 @@ const props = defineProps({
 });
 
 const config = inject('config');
-const type = inject('type');
+const type = computed(() => {
+  return inject('type').value;
+});
 const tools = inject('tools');
 const menuItemEvents = inject('menuItemEvents');
 const animations = inject('animations');
