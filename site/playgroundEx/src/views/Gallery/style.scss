@@ -20,12 +20,23 @@
         img {
             width: 240px;
             height: 160px;
+            // border: 1px solid #cddaff;
+        }
+        .case-thumbnail {
             transition: 0.3s;
-            border: none;
+            border: 1px solid #cddaff;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            padding: 2px 5px;
+        }
+        .case-name {
+            margin-top: 10px;
         }
         &:hover {
             // background-color: #000;
-            img {
+            .case-thumbnail {
+                border: 1px solid transparent;
                 transform: scale(1.05) translateY(-5px);
                 box-shadow: 0px 3px 10px 1px #e2e2e2;
             }

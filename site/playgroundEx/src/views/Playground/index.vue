@@ -28,12 +28,25 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-const router = useRouter();
+import { computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 const route = useRoute();
 const src = computed(() => {
   return `../../../playground_json/${route.hash.slice(1)}.playground.json`;
+});
+
+onMounted(() => {
+  const timer = setInterval(() => {
+    const urlDiv = document.querySelector('.urlDiv');
+    const el = document
+      .querySelector('#ide-preview')
+      ?.shadowRoot?.querySelector('iframe')?.src;
+    if (el.includes('playground-elements')) {
+      urlDiv.innerText = el;
+      console.log(el);
+      clearInterval(timer);
+    }
+  }, 1000);
 });
 </script>
 <style lang="scss" scoped>

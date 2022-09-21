@@ -27,7 +27,11 @@
               :class="`${example.name} hover-bkg sub-item`"
               :href="`#${example.key}`"
             >
-              <img draggable="false" class="thumbnail" />
+              <img
+                draggable="false"
+                class="thumbnail"
+                :src="`/src/assets/screenshots/${example.key}.png`"
+              />
             </a>
           </div>
         </div>

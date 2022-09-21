@@ -1,11 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const inquirer = require('inquirer');
+import fs from 'fs';
+import path from 'path';
+import ora from 'ora';
+const spinner = ora({ text: 'wait a minute...' });
 
-const ora = require('ora');
-const spinner = ora({ text: 'wait a minute...', spinner: 'clock' });
+import puppeteer from 'puppeteer';
 
-const puppeteer = require('puppeteer');
 const port = '5000';
 
 const waitTime = (time = 100) => {
@@ -16,49 +15,57 @@ const waitTime = (time = 100) => {
   });
 };
 
-let scrape = async (path) => {
-  const browser = await puppeteer.launch({ headless: true });
-  path = path.replace(/\'|\s/g, '');
-  fs.readdir(path, async (err, files) => {
-    if (err) {
-      console.log(`❌ Something wrong: ${err.message}!`);
-      process.exit(1);
+function findPath(data) {
+  if (!data) return;
+  const res = [];
+  const backTracking = (data, path) => {
+    const tmp = data.children || data.examples;
+    if (tmp) {
+      path.push(data.key || data.name);
+      tmp.forEach((i) => {
+        backTracking(i, path);
+      });
+      path.pop();
+    } else {
+      res.push(data.key);
     }
-    const dirs = files.filter((fileName) => !fileName.includes('.'));
-    for (let i = 0; i < dirs.length; i++) {
-      const pages = await browser.pages();
-      const page = pages[0];
-      try {
-        spinner.start();
-        await page.setViewport({
-          width: 1920,
-          height: 1080,
-          deviceScaleFactor: 1,
-        });
-        await page.goto(`http://localhost:${port}/#${dirs[i]}`);
-        await waitTime(2000);
-        const rs = await page.$eval('.urlDiv', (el) => el.textContent);
-        const iframe = await browser.newPage();
-        await iframe.goto(rs);
-        await iframe.screenshot({
-          path: `./screenshots/${dirs[i]}.png`,
-        });
-        await page.close();
-        spinner.succeed(`Screenshot of ${dirs[i]} saved!`);
-      } catch (error) {
-        spinner.error(`Could not save screenshot of ${dirs[i]}!`);
-      }
-    }
-    await browser.close();
+  };
+  data.forEach((item) => {
+    const path = [];
+    backTracking(item, path);
   });
-};
+  return res;
+}
 
-inquirer
-  .prompt({
-    type: 'input', // 问题类型，包括input，number，confirm，list，rawlist，password
-    name: 'path',
-    message: '请输入项目examples绝对路径', // 问题
-  })
-  .then((answers) => {
-    scrape(answers.path);
-  });
+async function scrape() {
+  const browser = await puppeteer.launch({ headless: true });
+  const p = path.resolve('playgroundEx', '../examples/config.json');
+  const config = JSON.parse(fs.readFileSync(p));
+  const examples = findPath(config.topic);
+  for (const example of examples) {
+    const pages = await browser.pages();
+    const page = pages[0];
+    try {
+      spinner.start();
+      await page.setViewport({
+        width: 1920,
+        height: 1080,
+        deviceScaleFactor: 1,
+      });
+      await page.goto(`http://127.0.0.1:${port}/playground/#${example}`);
+      await waitTime(3000);
+      const rs = await page.$eval('.urlDiv', (el) => el.textContent);
+      const iframe = await browser.newPage();
+      await iframe.goto(rs);
+      await iframe.screenshot({
+        path: `src/assets/screenshots/${example}.png`,
+      });
+      await page.close();
+      spinner.succeed(`Screenshot of ${example} saved!`);
+    } catch (error) {
+      spinner.error(`Could not save screenshot of ${example}!`);
+    }
+  }
+  await browser.close();
+}
+scrape();

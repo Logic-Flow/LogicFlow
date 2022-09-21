@@ -16,8 +16,13 @@
             :id="example.key"
             @click="jumpTo(example.key)"
           >
-            <img src="" alt="" />
-            <div>{{ example.name }}</div>
+            <div class="case-thumbnail">
+              <img
+                :src="`/src/assets/screenshots/${example.key}.png`"
+                :alt="example.key"
+              />
+            </div>
+            <div class="case-name">{{ example.name }}</div>
           </div>
         </div>
       </div>
