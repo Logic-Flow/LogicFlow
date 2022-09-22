@@ -12,10 +12,10 @@ dist
 dist-ssr
 *.local
 
-playground_json/*
-!playground_json/example.json
-src/assets/screenshots/*
-!src/assets/screenshots/example.png
+public/playground_json/*
+!public/playground_json/example.json
+public/screenshots/*
+!public/screenshots/example.png
 
 
 # Editor directories and files

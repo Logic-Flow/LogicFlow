@@ -102,6 +102,10 @@ export const useAnimations = () => {
 };
 
 export const useTools = () => {
+  const goAnchor = (id) => {
+    var anchor = document.getElementById(id);
+    anchor.scrollIntoView();
+  };
   const initConfig = (data) => {
     data.forEach((item) => {
       item.fold = true;
@@ -181,5 +185,6 @@ export const useTools = () => {
     filter,
     initConfig,
     hightLight,
+    goAnchor,
   };
 };

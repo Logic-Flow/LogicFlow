@@ -18,7 +18,7 @@
           >
             <div class="case-thumbnail">
               <img
-                :src="`/src/assets/screenshots/${example.key}.png`"
+                :src="`/screenshots/${example.key}.png`"
                 :alt="example.key"
               />
             </div>

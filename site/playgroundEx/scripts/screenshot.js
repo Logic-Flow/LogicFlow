@@ -52,13 +52,15 @@ async function scrape() {
         height: 1080,
         deviceScaleFactor: 1,
       });
-      await page.goto(`http://127.0.0.1:${port}/playground/#${example}`);
-      await waitTime(3000);
+      await page.goto(
+        `http://127.0.0.1:${port}/#/examples/playground/#${example}`,
+      );
+      await waitTime(4000);
       const rs = await page.$eval('.urlDiv', (el) => el.textContent);
       const iframe = await browser.newPage();
       await iframe.goto(rs);
       await iframe.screenshot({
-        path: `src/assets/screenshots/${example}.png`,
+        path: `public/screenshots/${example}.png`,
       });
       await page.close();
       spinner.succeed(`Screenshot of ${example} saved!`);

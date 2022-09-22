@@ -1,18 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const routes = [
   {
     path: '/',
     name: 'Index',
-    redirect: 'gallery',
+    redirect: 'examples/gallery',
     children: [
       {
-        path: '/gallery',
+        path: '/examples/gallery',
         name: 'Gallery',
         component: () => import('../views/Gallery/index.vue'),
       },
       {
-        path: '/playground',
+        path: '/examples/playground',
         name: 'Playground',
         component: () => import('../views/Playground/index.vue'),
       },
@@ -21,7 +21,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 

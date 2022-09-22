@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import examplesConfig from './scripts/rollup-plugin-config/rollup-plugin-config-json';
 import playgroundJson from './scripts/rollup-plugin-playground/rollup-plugin-playground-json';
-// import screenshotPlugin from './scripts/rollup-plugin-screenshot/rollup-plugin-screenshot';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,12 +21,13 @@ export default defineConfig({
     }),
     examplesConfig(),
     playgroundJson(),
-    // screenshotPlugin(),
   ],
+  build: {
+    assetsDir: 'assets',
+  },
   server: {
     port: 5000,
     strictPort: true,
-    // host: 'localhost',
     cors: true,
   },
 });

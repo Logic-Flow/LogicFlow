@@ -53,18 +53,5 @@ export default function generatePlaygroundJson() {
       files: jsonFiles,
     };
   }
-  // for (const item of playgroundPathStr) {
-  //   const p = path.resolve('playgroundEx', '../examples', item);
-  //   const files = fs.readdirSync(p);
-  //   files.forEach((file) => {
-  //     const filePath = path.resolve(playgroundPath, file);
-  //     const content = fs.readFileSync(filePath, 'utf8');
-  //     jsonFiles[file] = {
-  //       content,
-  //     };
-  //   });
-  // }
-  // const playgroundPath = path.resolve('playgroundEx', '../examples', name);
-
   return jsonObject;
 }

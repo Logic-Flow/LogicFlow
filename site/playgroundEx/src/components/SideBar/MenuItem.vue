@@ -22,15 +22,16 @@
                 () => {
                   menuItemEvents.clickItem(`${example.name}`);
                   menuItemEvents.toggleSelectedByPath(config, data.name);
+                  router.push(`playground#${example.key}`);
                 }
               "
               :class="`${example.name} hover-bkg sub-item`"
-              :href="`#${example.key}`"
+              href="javascript:void(0)"
             >
               <img
                 draggable="false"
                 class="thumbnail"
-                :src="`/src/assets/screenshots/${example.key}.png`"
+                :src="`/screenshots/${example.key}.png`"
               />
             </a>
           </div>
@@ -39,8 +40,8 @@
     </div>
     <div v-else :class="`${data.name} hover-bkg`">
       <a
-        :href="`#${data.key}`"
-        @click="menuItemEvents.toggleSelectedByPath(config, data.name)"
+        href="javascript:void(0)"
+        @click="handleAtagClick(data.name, data.key)"
         v-html="tools.hightLight(data, inputValue)"
       >
       </a>
@@ -50,7 +51,10 @@
 
 <script setup>
 import { inject, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import CollapseTransition from '../SideBarTransition/transition.vue';
+
+const router = useRouter();
 
 const props = defineProps({
   data: {
@@ -75,6 +79,15 @@ const tools = inject('tools');
 const menuItemEvents = inject('menuItemEvents');
 const animations = inject('animations');
 const inputValue = inject('inputValue');
+
+const handleAtagClick = (name, id) => {
+  tools.goAnchor(id);
+  menuItemEvents.toggleSelectedByPath(config, name);
+};
+// const handleImgATagClick = (exampleName, dataName, id) => {
+//   menuItemEvents.clickItem(`${exampleName}`);
+//   menuItemEvents.toggleSelectedByPath(config, dataName);
+// };
 </script>
 <style lang="scss" scoped>
 @import './scoped.scss';
