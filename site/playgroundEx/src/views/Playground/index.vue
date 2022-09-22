@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div>
-    <div class="lf-playground">
+    <div class="lf-playground" :class="src">
       <playground-project id="ide-project" :project-src="src">
       </playground-project>
       <div class="ide">
@@ -22,32 +22,43 @@
           ></playground-file-editor>
         </div>
       </div>
-      <div class="urlDiv">123</div>
+      <div class="urlDiv">1</div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
+const router = useRouter();
 const src = computed(() => {
   return `/playground_json/${route.hash.slice(1)}.playground.json`;
 });
-
 onMounted(() => {
+  // let count = 0;
+  // if (history.state.back === '/examples/gallery') {
+  //   router.go(0);
+  // }
   const timer = setInterval(() => {
     const urlDiv = document.querySelector('.urlDiv');
     const el = document
       .querySelector('#ide-preview')
       ?.shadowRoot?.querySelector('iframe')?.src;
-    if (el.includes('playground-elements')) {
+    // count++;
+    // if (count === 5) {
+    //   router.go(0);
+    // }
+    if (el?.includes('playground-elements')) {
       urlDiv.innerText = el;
-      console.log(el);
       clearInterval(timer);
     }
   }, 1000);
 });
+
+const CLG = (flag) => {
+  console.log(flag);
+};
 </script>
 <style lang="scss" scoped>
 @import url('./style.scss');

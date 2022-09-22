@@ -38,7 +38,7 @@ function findPath(data) {
 }
 
 async function scrape() {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: false });
   const p = path.resolve('playgroundEx', '../examples/config.json');
   const config = JSON.parse(fs.readFileSync(p));
   const examples = findPath(config.topic);
