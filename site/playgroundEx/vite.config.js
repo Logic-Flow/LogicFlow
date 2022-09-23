@@ -43,6 +43,15 @@ export default defineConfig({
       },
     }),
   ],
+  // build: {
+  //   rollupOptions: {
+  //     output: {
+  //       manualChunks: {
+  //         'playground-elements': ['playground-elements'],
+  //       },
+  //     },
+  //   },
+  // },
   server: {
     port: 5000,
     strictPort: true,

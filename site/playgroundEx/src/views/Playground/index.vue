@@ -6,18 +6,18 @@
       </playground-project>
       <div class="ide">
         <div class="preview">
-          <playground-preview id="ide-preview" project="ide-project">
+          <playground-preview id="ide-preview" :project="project">
           </playground-preview>
         </div>
         <div class="editor">
           <playground-tab-bar
-            project="ide-project"
+            :project="project"
             editor="ide-editor"
             editable-file-system="true"
           ></playground-tab-bar>
           <playground-file-editor
             id="ide-editor"
-            project="ide-project"
+            :project="project"
             line-numbers
           ></playground-file-editor>
         </div>
@@ -28,37 +28,27 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 const src = computed(() => {
   return `/playground_json/${route.hash.slice(1)}.playground.json`;
 });
+const project = ref(null);
 onMounted(() => {
-  // let count = 0;
-  // if (history.state.back === '/examples/gallery') {
-  //   router.go(0);
-  // }
+  project.value = 'ide-project';
   const timer = setInterval(() => {
     const urlDiv = document.querySelector('.urlDiv');
     const el = document
       .querySelector('#ide-preview')
       ?.shadowRoot?.querySelector('iframe')?.src;
-    // count++;
-    // if (count === 5) {
-    //   router.go(0);
-    // }
     if (el?.includes('playground-elements')) {
       urlDiv.innerText = el;
       clearInterval(timer);
     }
   }, 1000);
 });
-
-const CLG = (flag) => {
-  console.log(flag);
-};
 </script>
 <style lang="scss" scoped>
 @import url('./style.scss');
