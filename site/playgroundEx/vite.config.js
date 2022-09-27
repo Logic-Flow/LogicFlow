@@ -56,5 +56,6 @@ export default defineConfig({
     port: 5000,
     strictPort: true,
     cors: true,
+    base: '/docs.logic-flow.cn/',
   },
 });

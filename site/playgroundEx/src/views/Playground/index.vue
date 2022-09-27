@@ -33,6 +33,7 @@ import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 const src = computed(() => {
+  console.log(1, route);
   return `/playground_json/${route.hash.slice(1)}.playground.json`;
 });
 const project = ref(null);
