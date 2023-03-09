@@ -1,16 +1,17 @@
 import 'playground-elements';
 
-fetch('examples/config.json').then((res) => {
-  return res.json();
-})
-.then((res) => {
-  setExampleList(res.examples);
-});
+fetch('examples/config.json')
+  .then((res) => {
+    return res.json();
+  })
+  .then((res) => {
+    setExampleList(res.examples);
+  });
 
 function setExampleList(examples) {
   const listWrapper = document.querySelector('#js-playground-list');
   const ul = document.createElement('ul');
-  examples.forEach(element => {
+  examples.forEach((element) => {
     const li = document.createElement('li');
     const link = document.createElement('a');
     link.href = '#' + element.key;
@@ -35,10 +36,10 @@ window.addEventListener('hashchange', () => {
   loadPlayground(hash.slice(1));
 });
 
-const ide = document.querySelector('#js-ide');
+const project = document.querySelector('#ide-project');
 
 function loadPlayground(key) {
-  ide.setAttribute('project-src', `examples/${key}.playground.json`)
+  // const ide = document.querySelector('#js-ide');
+  // ide.setAttribute('project-src', `examples/${key}.playground.json`);
+  project.setAttribute('project-src', `examples/${key}.playground.json`);
 }
-
-
