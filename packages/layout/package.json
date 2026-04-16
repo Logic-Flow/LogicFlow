@@ -1,6 +1,6 @@
 {
   "name": "@logicflow/layout",
-  "version": "2.1.0-alpha.6",
+  "version": "2.1.0-alpha.7",
   "description": "LogicFlow layout",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -38,12 +38,20 @@
   ],
   "author": "Logicflow-Team",
   "license": "Apache-2.0",
+  "peerDependencies": {
+    "@logicflow/core": "workspace:*"
+  },
   "dependencies": {
-    "@logicflow/core": "workspace:*",
     "dagre": "^0.8.5",
     "elkjs": "^0.11.0"
   },
   "devDependencies": {
+    "@logicflow/core": "workspace:*",
     "@types/dagre": "^0.7.53"
-  }
+  },
+  "files": [
+    "dist",
+    "es",
+    "lib"
+  ]
 }

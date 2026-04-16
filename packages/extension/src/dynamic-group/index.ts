@@ -328,7 +328,6 @@ export class DynamicGroup {
   }: Omit<CallbackArgs<'node:click'>, 'e' | 'position'>) => {
     const nodeModel = this.lf.getNodeModelById(node.id)
     this.sendNodeToFront(nodeModel)
-
     // 重置所有 group 的 zIndex，防止 group 节点 zIndex 增长为正数（目的是保持 group 节点在最底层）
     if (this.topGroupZIndex > DEFAULT_TOP_Z_INDEX) {
       const { nodes } = this.lf.graphModel

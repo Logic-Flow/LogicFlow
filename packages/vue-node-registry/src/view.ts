@@ -10,7 +10,7 @@ import {
   isNumber,
 } from 'lodash-es'
 import { HtmlNode } from '@logicflow/core'
-import { vueNodesMap } from './registry'
+import { getVueNodeConfig } from './registry'
 import { isActive, connect, disconnect } from './teleport'
 import { Container } from './components/container'
 
@@ -87,7 +87,23 @@ export class VueNodeView extends HtmlNode {
       })
 
     if (root) {
-      const { component } = vueNodesMap[model.type]
+      const nodeConfig = getVueNodeConfig(model.type, graphModel)
+      const flowId = this.props.graphModel.flowId
+      if (!nodeConfig) {
+        // No registered config for this node type; ensure any existing Teleport mount is cleaned up
+        if (isVue3 && isActive() && flowId) {
+          disconnect(this.targetId(), flowId)
+        }
+        return
+      }
+      const { component } = nodeConfig
+      if (!component) {
+        // Config exists but has no component; also clean up any existing Teleport mount
+        if (isVue3 && isActive() && flowId) {
+          disconnect(this.targetId(), flowId)
+        }
+        return
+      }
       if (component) {
         if (isVue2) {
           const Vue = Vue2 as any
@@ -96,8 +112,10 @@ export class VueNodeView extends HtmlNode {
             el: root,
             render(h: any) {
               return h(Composed, {
-                node: model,
-                graph: graphModel,
+                props: {
+                  node: model,
+                  graph: graphModel,
+                },
               })
             },
             provide() {
