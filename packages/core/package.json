@@ -1,6 +1,6 @@
 {
   "name": "@logicflow/core",
-  "version": "2.2.0-alpha.7",
+  "version": "2.2.1",
   "description": "LogicFlow, help you quickly create flowcharts",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -27,7 +27,8 @@
     "build:watch:cjs": "rss",
     "build": "rss",
     "prebuild": "rss",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node scripts/postinstall-ai-prompt.js"
   },
   "keywords": [
     "@logicflow/core",
@@ -56,6 +57,7 @@
   "files": [
     "dist",
     "es",
-    "lib"
+    "lib",
+    "scripts"
   ]
 }
