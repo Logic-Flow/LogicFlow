@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.2.3
+
+### Patch Changes
+
+- add ai coding intro to core/readme.md
+
+## 2.2.2
+
+### Patch Changes
+
+- AI friendly docs include in core package
+
 ## 2.2.1
 
 ### Patch Changes
